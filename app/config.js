@@ -9,7 +9,7 @@ module.exports = {
   oracle_config: {
     user: process.env.DAMEN_ORACLE_USER,
     password: process.env.DAMEN_ORACLE_PASS,
-    connectString : process.env.DAMEN_ORACLE_URI,
+    connectString : `${config.get("oracle_host")}/${process.env.DAMEN_ORACLE_DB}`,
     events: true
   },
   mySql_config: {
