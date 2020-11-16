@@ -25,8 +25,8 @@ module.exports = function (app) {
   }
 
   // Apply Routes
-  app.use("/bi-api/admin", adminApi);
-  app.use("/bi-api/maps", mapsApi);
+  app.use("/admin", adminApi);
+  app.use("/maps", mapsApi);
   app.use("/", homeRoute)
 
   // Apply Error Middle ware
