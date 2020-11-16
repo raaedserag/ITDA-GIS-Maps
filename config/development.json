@@ -1,4 +1,4 @@
 {
     "host": "10.43.30.182",
-    "redis_host": "localhost"
+    "redis_host": "10.22.1.33"
 }

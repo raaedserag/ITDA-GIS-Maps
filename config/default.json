@@ -2,5 +2,6 @@
   "name": "BI-Locations",
   "host": "localhost",
   "port": 16797,
+  "redis_host": "localhost",
   "redis_port": 6379
 }
