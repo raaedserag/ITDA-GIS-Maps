@@ -2,7 +2,7 @@ const { redis } = require("../database/redis")
 module.exports.MapsHelper = class {
     constructor() {
     }
-    polygonAverage = function (polygon) {
+    polygonAverage (polygon) {
         let sumLat = 0, sumLong = 0;
         for (let index = 0; index < polygon.length; index++) {
             sumLat += +polygon[index].lat;
@@ -11,7 +11,7 @@ module.exports.MapsHelper = class {
         return { lat: (sumLat / polygon.length).toFixed(7), long: (sumLong / polygon.length).toFixed(7) };
     };
 
-    formatMerchant = function (merchants) {
+    formatMerchant (merchants) {
         for (let [index, merch] of merchants.entries()) {
             merch.location = { lat: merch.lat, long: merch.long }
             delete merch.lat
