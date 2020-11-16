@@ -13,7 +13,7 @@ module.exports = {
     events: true
   },
   mySql_config: {
-    host     : process.env.DAMEN_MYSQL_HOST,
+    host     : config.get("mysql_host"),
     user     : process.env.DAMEN_MYSQL_USER,
     password : process.env.DAMEN_MYSQL_PASS,
     database : process.env.DB
