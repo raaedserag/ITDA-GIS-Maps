@@ -3,8 +3,8 @@ module.exports = {
   host: config.get("host"),
   port: config.get("port"),
   redis_config: {
-    host: process.env.DAMEN_REDIS_HOST,
-    port: process.env.DAMEN_REDIS_PORT
+    host: config.get("redis_host"),
+    port: config.get("redis_port")
   },
   oracle_config: {
     user: process.env.DAMEN_ORACLE_USER,
