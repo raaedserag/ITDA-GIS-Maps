@@ -3,5 +3,5 @@
     "redis_host": "10.22.1.33",
     "oracle_host": "10.22.1.140",
     "mysql_host": "10.22.1.220",
-    "api-host": null
+    "api-host": "/bi-api"
 }

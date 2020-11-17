@@ -2,5 +2,6 @@
     "host": "localhost",
     "redis_host": "localhost",
     "oracle_host": "10.29.41.42",
-    "mysql_host": "10.29.41.20"
+    "mysql_host": "10.29.41.20",
+    "api-host": null
 }

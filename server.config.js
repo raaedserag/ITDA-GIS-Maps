@@ -1,5 +1,5 @@
 var pm2Config; 
-if (process.env.NODE_ENV == "production") pm2Config = {
+if (process.env.NODE_ENV == "production" || "dev-prod") pm2Config = {
   apps : [{
     name      : 'BI-Locations',
     script    : 'index.js',

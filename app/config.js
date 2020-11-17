@@ -2,6 +2,7 @@ const config = require("config")
 module.exports = {
   host: config.get("host"),
   port: config.get("port"),
+  api_host: config.get("api-host"),
   redis_config: {
     host: config.get("redis_host"),
     port: config.get("redis_port")
