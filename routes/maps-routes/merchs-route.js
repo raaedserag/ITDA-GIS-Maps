@@ -6,7 +6,7 @@ const router = express.Router();
 const {MapsController} = require("../../controllers/maps-controller")
 //------------
 
-// Get Merchants of some Representative
+// Representative  => Merchants locations
 router.post("/by-rep", async (req, res) => {
     let mapsCI = new MapsController();
     let response = await mapsCI.getMerchsOfReps(req.body.rep_code)
@@ -14,7 +14,7 @@ router.post("/by-rep", async (req, res) => {
     res.status(response.code).send(response.result)
 });
 
-// Get Merchants of some Governorate
+// Governorate  => Merchants locations
 router.post("/by-gov", async (req, res) => {
     let mapsCI = new MapsController();
     let response = await mapsCI.getMerchsOfGovs(req.body.gov_code)
@@ -22,5 +22,12 @@ router.post("/by-gov", async (req, res) => {
     res.status(response.code).send(response.result)
 });
 
+// Code  => Merchants locations
+router.post("/by-merch", async (req, res) => {
+    let mapsCI = new MapsController();
+    let response = await mapsCI.getLocationsOfMerchs(req.body.merch_codes)
+    await mapsCI.destructor();
+    res.status(response.code).send(response.result)
+});
 
 module.exports = router;

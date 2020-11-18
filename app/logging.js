@@ -28,7 +28,7 @@ module.exports = function () {
   // use a log file and a database to log errors.
   winston.add(new winston.transports.File({ filename: "logfile.log" }));
   //  Use Console logging in development mode only
-  if (process.env.NODE_ENV == "development") {
+  if (process.env.NODE_ENV == "development" ) {
     winston.add(
       new winston.transports.Console({
         level: "info",

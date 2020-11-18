@@ -44,13 +44,24 @@ module.exports.MapsServices = class {
   }
 
   async getMerchsLocations(merchsCodes) {
-    let merchs = await this.oracleClient.execute(`
-    SELECT damen_merchant_code AS "merch_code", x_coordinate AS "lat", y_coordinate AS "long"
-    FROM smart_damen_owner 
-    WHERE x_coordinate is not null AND y_coordinate is not null AND damen_merchant_code IN ${sequelizeBinds(merchsCodes.length)}
-    `, merchsCodes, { outFormat: oracledb.OUT_FORMAT_OBJECT })
-    if (!(merchs && merchs.rows && merchs.rows.length)) return null;
-    return merchs.rows ;
+    let merchs, result = [], i=0, j=0, length = merchsCodes.length ;
+    while (i < length) {
+      j = (length - 999 - i > 0) ?  999+i : length
+      merchs = merchsCodes.slice(i, j)
+      i = j;
+      
+      merchs = await this.oracleClient.execute(`
+      SELECT damen_merchant_code AS "merch_code", x_coordinate AS "lat", y_coordinate AS "long"
+      FROM smart_damen_owner 
+      WHERE x_coordinate is not null AND y_coordinate is not null AND damen_merchant_code IN ${sequelizeBinds(merchs.length)}
+      `, merchs, { outFormat: oracledb.OUT_FORMAT_OBJECT })
+      if (!(merchs && merchs.rows && merchs.rows.length)) merchs.rows = [];
+      
+      result = Array.prototype.concat(result, merchs.rows);
+      
+    }
+    if (!(result && result.length)) return null;
+    return result ;
   }
 
   async getGovMerchsLocations(govCode) {

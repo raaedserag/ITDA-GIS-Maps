@@ -1,5 +1,6 @@
 // Import Modules
 const express = require("express");
+const router = express.Router()
 // Import Middlewares
 const error = require("../middlewares/error");
 //const authentication = require("../middlewares/authentication");
@@ -23,7 +24,7 @@ module.exports = function (app) {
   if (process.env.NODE_ENV == "development") {
     app.use(require("morgan")("tiny"));
   }
-
+  
   // Apply Routes
   app.use("/admin", adminApi);
   app.use("/maps", mapsApi);

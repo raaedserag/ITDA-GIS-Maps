@@ -68,10 +68,13 @@ class MapsController {
     for (let [index, rep] of reps.entries()) {
       let merchs = await mapsSI.getMerchsCodes(rep.rep_code);
       if (!merchs || merchs.length > 999) continue;
+     
       merchs = await mapsSI.getMerchsLocations(merchs)
       if (!merchs) continue;
+      
       rep.location = new MapsHelper().polygonAverage(merchs)
       index % 2  ? rep.status = "#2ECC71" : rep.status = "#f08a5d"
+      
       repsData.push(rep) 
     };
 
@@ -94,13 +97,7 @@ class MapsController {
     let merchsCodes = await mapsSI.getMerchsCodes(rep_code);
     if (!merchsCodes) return { result: 'No registered merchants for this representative', code: 404 };
     
-    let merchs = await mapsSI.getMerchsLocations(merchsCodes)
-    if (!merchs) return {result: 'No registered merchants locations for this representative', code: 404};
-    
-    merchs = new MapsHelper().formatMerchant(merchs)
-    
-    
-    return { result: merchs, code: 200} ;
+    return await this.getLocationsOfMerchs(merchsCodes)
   }
 
   async getMerchsOfGovs(gov_code) {
@@ -112,6 +109,15 @@ class MapsController {
 
     merchs = new MapsHelper().formatMerchant(merchs)
     
+    return { result: merchs, code: 200} ;
+  }
+
+  async getLocationsOfMerchs(merchs_codes) {
+    await this.oracleConnection.init();
+    let merchs = await new MapsServices(null, this.oracleConnection.client, null).getMerchsLocations(merchs_codes)
+    if (!merchs) return { result: 'No registered merchants locations for this representative', code: 404 };
+    
+    merchs = new MapsHelper().formatMerchant(merchs)
     return { result: merchs, code: 200} ;
   }
 }
