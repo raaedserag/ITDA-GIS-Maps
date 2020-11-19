@@ -106,3 +106,5 @@ typings/
 node_modules
 .vscode
 reference
+damen-env-batch.bat
+.env
