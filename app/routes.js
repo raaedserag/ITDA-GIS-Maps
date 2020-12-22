@@ -25,9 +25,8 @@ module.exports = function (app) {
   }));
  
   // Apply Morgan middleware in development mode
-  if (process.env.NODE_ENV == "development" || process.env.NODE_ENV == "staging") {
-    app.use(require("morgan")("tiny"));
-  }
+  app.use(require("morgan")("tiny"));
+  
   
   // Apply Routes
   app.use("/admin", adminApi);
