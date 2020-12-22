@@ -7,7 +7,7 @@ const {AdminController} = require("../../controllers/admin-controller")
 //------------
 
 // Cash All Sales Representatives
-router.put("/cache-reps/all", async (req, res) => {
+router.get("/cache-reps/all", async (req, res) => {
     let adminCI = new AdminController()
     let response = await adminCI.cacheAllGovsReps()
     await adminCI.destructor()
