@@ -1,4 +1,5 @@
 {
+  "api_prefix": null,
   "name": "BI-Locations",
   "port": 16797,
   "redis_port": 6379
