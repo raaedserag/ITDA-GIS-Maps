@@ -6,6 +6,7 @@ const { redisMainConnection } = require("../database/redis");
 const {AdminServices} = require("../services/admin-service")
 const { MapsController } = require("./maps-controller")
 
+const winston = require("winston")
 //------------------------
 module.exports.AdminController = class {
   constructor(mysqlConnection = null, oracleConnection = null, redisConnection=null) {
@@ -19,6 +20,7 @@ module.exports.AdminController = class {
   }
 
   async cacheAllGovsReps() {
+    let interval = twirlConsole("Updating cache ")// For fun
     await this.mysqlConnection.init();
     await this.oracleConnection.init();
 
@@ -32,6 +34,9 @@ module.exports.AdminController = class {
 
     if (!(result && result.length)) return { result: "No registered representatives locations for all governorates !", code: 404 }
     
+    clearInterval(interval) // Remove fun :D
+    console.log("\n")
+    winston.info(`Cache updated:\n, ${JSON.stringify(result, null, 2)}`)
     return {result, code: 200};
   }
 
@@ -48,3 +53,14 @@ module.exports.AdminController = class {
     return {result: cashResult, code: 200}
   }
 }
+
+
+// Fancy loading
+function twirlConsole(text) {
+  var P = ["|", "/", "-", "\\"];
+  var x = 0;
+  return setInterval(function() {
+    process.stdout.write("\r" + text + P[x++]);
+    x &= 3;
+  }, 750);
+};

@@ -13,12 +13,13 @@ module.exports.MapsServices = class {
   
   async getRepsOfGov(gov_code) {
     let  repsCodes = await this.mysqlClient.query(`
-    SELECT email AS rep_code, district_name
+    SELECT email AS rep_code, district_name, name, mobile_number AS mobile,  IF(street_name="", district_name, CONCAT(district_name, " - ", street_name)) AS "address" 
     FROM epayment2_production.users 
     WHERE role_id=6 AND gov_code=?;
     `, [gov_code])
 
     if (!(repsCodes[0] && repsCodes[0].length)) return null;
+    console.log(repsCodes[0])
     return repsCodes[0];
   }
 
@@ -51,7 +52,7 @@ module.exports.MapsServices = class {
       i = j;
       
       merchs = await this.oracleClient.execute(`
-      SELECT damen_merchant_code AS "merch_code", x_coordinate AS "lat", y_coordinate AS "long"
+      SELECT damen_merchant_code AS "merch_code", x_coordinate AS "lat", y_coordinate AS "long", mobile AS "mobile", name AS "name", address AS "address", (case when principal = null then principal else name end) AS "place_name"
       FROM smart_damen_owner 
       WHERE x_coordinate is not null AND y_coordinate is not null AND damen_merchant_code IN ${sequelizeBinds(merchs.length)}
       `, merchs, { outFormat: oracledb.OUT_FORMAT_OBJECT })
@@ -66,7 +67,7 @@ module.exports.MapsServices = class {
 
   async getGovMerchsLocations(govCode) {
     let merchs = await this.oracleClient.execute(`
-    SELECT damen_merchant_code AS "merch_code", x_coordinate AS "lat", y_coordinate AS "long"
+    SELECT damen_merchant_code AS "merch_code", x_coordinate AS "lat", y_coordinate AS "long", mobile AS "mobile", name AS "name", address AS "address", (case when principal = null then principal else name end) AS "place_name"
     FROM smart_damen_owner 
     WHERE x_coordinate is not null AND y_coordinate is not null AND governorate_code = ${govCode}
     `, [], { outFormat: oracledb.OUT_FORMAT_OBJECT })
