@@ -54,7 +54,7 @@ module.exports.MapsServices = class {
       merchs = await this.oracleClient.execute(`
       SELECT damen_merchant_code AS "merch_code", x_coordinate AS "lat", y_coordinate AS "long", mobile AS "mobile", name AS "name", address AS "address", (case when principal = null then principal else name end) AS "place_name"
       FROM smart_damen_owner 
-      WHERE x_coordinate is not null AND y_coordinate is not null AND damen_merchant_code IN ${sequelizeBinds(merchs.length)}
+      WHERE x_coordinate is not null AND y_coordinate is not null AND name is not null AND address is not NULL AND damen_merchant_code IN ${sequelizeBinds(merchs.length)}
       `, merchs, { outFormat: oracledb.OUT_FORMAT_OBJECT })
       if (!(merchs && merchs.rows && merchs.rows.length)) merchs.rows = [];
       
@@ -69,7 +69,7 @@ module.exports.MapsServices = class {
     let merchs = await this.oracleClient.execute(`
     SELECT damen_merchant_code AS "merch_code", x_coordinate AS "lat", y_coordinate AS "long", mobile AS "mobile", name AS "name", address AS "address", (case when principal = null then principal else name end) AS "place_name"
     FROM smart_damen_owner 
-    WHERE x_coordinate is not null AND y_coordinate is not null AND governorate_code = ${govCode}
+    WHERE x_coordinate is not null AND y_coordinate is not null AND name is not null AND address is not NULL AND governorate_code = ${govCode}
     `, [], { outFormat: oracledb.OUT_FORMAT_OBJECT })
     if (!(merchs && merchs.rows && merchs.rows.length)) return null;
     return merchs.rows ;
