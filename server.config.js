@@ -1,6 +1,6 @@
 var pm2Config = {
   apps : [{
-    name      : 'BI-Locations',
+    name      : 'itdgis-api',
     script    : 'index.js',
   }]
 }
