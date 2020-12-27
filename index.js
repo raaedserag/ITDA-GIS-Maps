@@ -7,9 +7,6 @@ const {redisMainConnection } = require("./database/redis")
 //Logging
 require("./app/logging")();
 
-//Data Base
-//connectMongo();
-
 //Routes
 require("./app/routes")(app);
 
@@ -19,4 +16,3 @@ app.listen(port, host, () => winston.info(`Server started as ${process.env.NODE_
 
 // Initialize Cache
 redisMainConnection.init()
-new (require("./controllers/admin-controller").AdminController)().cacheAllGovsReps()

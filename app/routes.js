@@ -24,10 +24,8 @@ module.exports = function (app) {
   
   // Apply Routes
   Object.entries({
-    "/admin": require("../apis/admin-api"),
-    "/maps": require("../apis/maps-api"),
-    "/": require("../routes/home-route")
-
+    "/": require("../routes/home-route"),
+    "/maps": require("../routes/maps-route")
   }).map((route=> app.use(api_prefix? `${api_prefix}${route[0]}` : route[0], route[1])))
 
   // Apply Error Middle ware
