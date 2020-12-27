@@ -7,10 +7,10 @@ module.exports = {
     host: config.get("redis_host"),
     port: config.get("redis_port")
   },
-  mySql_config: {
-    host     : config.get("mysql_host"),
-    user     : process.env.DAMEN_MAPS_MYSQL_USER,
-    password : process.env.DAMEN_MAPS_MYSQL_PASS,
-    database : config.get("mysql_dbName")
-  },
+  oracle_config: {
+    user     : process.env.ITDA_MAPS_ORACLE_USER,
+    password : process.env.ITDA_MAPS_ORACLE_PASS,
+    dbName: config.get("oracle_dbName"),
+    connectString: `${config.get("oracle_host")}/${config.get("oracle_dbSchema")}`,
+  }
 }

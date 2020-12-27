@@ -1,6 +1,7 @@
 {
     "host": "localhost",
     "redis_host": "localhost",
-    "mysql_host": "10.29.41.20",
-    "mysql_dbName": "ITDA_GIS"
+    "oracle_host": "10.29.41.42",
+    "oracle_dbName": "ITDA_GIS",
+    "oracle_dbSchema": "GEODB"
 }
