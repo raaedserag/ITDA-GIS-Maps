@@ -13,8 +13,9 @@ async function getOfficeLocationsDB(gov_code = null) {
     // Configure sql statement
     let sqlStatement = `
     SELECT OFFICE_CODE AS "officeCode", OFFICE_NAME AS "officeName", ADDRESS AS "address", LATITUDE AS "lat", LONGITUDE AS "long",
-        EMPLOYEESS_COUNT AS "numOfWorkers", TRANS_COUNT AS "numOfTransaction", REVENUES AS "revenues", CATEGORY_NAME AS "type",
-        OFFICE_PHASE AS "officePhase",ATTACHED_TO AS "attachedTo", LOGO_AVAILABLE AS "isLogoAvailable", GOV_CODE AS "gov_code",
+        EMPLOYEES_COUNT AS "numOfWorkers", TRANS_COUNT AS "numOfTransaction", REVENUES AS "revenues", CATEGORY_NAME AS "type",
+        OFFICE_PHASE AS "officePhase", ATTACHED_TO AS "attachedTo", LOGO_AVAILABLE AS "isLogoAvailable", GOV_CODE AS "gov_code",
+        ICON_ID AS "iconId"
     FROM ${oracle_config.dbName}
     `
     if(gov_code) sqlStatement += `WHERE GOV_CODE=${gov_code}`
