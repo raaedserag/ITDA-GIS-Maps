@@ -25,6 +25,7 @@
     "winston": "^3.3.3"
   },
   "devDependencies": {
+    "exceljs": "^4.2.0",
     "nodemon": "^2.0.6"
   }
 }
