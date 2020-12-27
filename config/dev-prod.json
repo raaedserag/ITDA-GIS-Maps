@@ -1,7 +1,0 @@
-{
-    "api_prefix": "/bi-api",
-    "host": "172.22.224.1",
-    "redis_host": "10.22.1.33",
-    "oracle_host": "10.22.1.140",
-    "mysql_host": "10.22.1.220"
-}
