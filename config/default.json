@@ -1,6 +1,6 @@
 {
   "api_prefix": null,
-  "name": "BI-Locations",
+  "name": "ITDGIS-Maps",
   "port": 16000,
   "redis_port": 6379
 }
