@@ -1,3 +1,5 @@
+/* This script manipulate excel data as ITDA-Data.xlsx to convert it to encoded schema ITDA-DATA.xlsx and export */
+
 const Excel = require('exceljs');
 const fs = require("fs")
 const governoratess = require("../samples/itda-govs.json")
