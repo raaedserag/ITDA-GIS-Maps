@@ -15,6 +15,10 @@ async function main() {
     let logoColumn = worksheet.getColumn(15).values
     let phaseColumn = worksheet.getColumn(14).values
     let iconColumn = worksheet.getColumn(16).values
+    let transColumn = worksheet.getColumn(9).values
+    let revenuesColumn = worksheet.getColumn(10).values
+    let latColumn = worksheet.getColumn(6).values
+    let longColumn = worksheet.getColumn(7).values
     for (let index = 3; index < govsColumn.length; index++) {
         // Manipulate govs, convert gov names to gov codes
         let findedGov = governoratess.find((gov) => gov.ar_name == govsColumn[index].trim())
@@ -27,11 +31,22 @@ async function main() {
 
         // Manipulate icon, if phase is 3 then put icon id(result), else it's empty ""
         iconColumn[index] = (phaseColumn[index] == 3)? iconColumn[index].result : ""
+
+        // Manipulate trans & revenues
+        
+        if(!isNaN(transColumn[index])) transColumn[index] = parseInt(transColumn[index])
+        if(!isNaN(revenuesColumn[index])) revenuesColumn[index] =  parseFloat(revenuesColumn[index]).toFixed(2)
+        if(!isNaN(latColumn[index])) latColumn[index] =  parseFloat(latColumn[index])
+        if(!isNaN(longColumn[index])) longColumn[index] =  parseFloat(longColumn[index])
     }
     // Edit manipulated columns & write xlsx file
     worksheet.getColumn(3).values = govsColumn;
     worksheet.getColumn(15).values = logoColumn;
     worksheet.getColumn(16).values = iconColumn;
+    worksheet.getColumn(9).values = transColumn;
+    worksheet.getColumn(10).values = revenuesColumn;
+    worksheet.getColumn(6).values = latColumn;
+    worksheet.getColumn(7).values = longColumn;
     await workbook.xlsx.writeFile('./samples/ITDA-Manipulated-Data.xlsx')
 
     // Format as json object & write json file
