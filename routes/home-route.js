@@ -5,7 +5,7 @@ const router = express.Router();
 const landingPage = require('path').resolve(__dirname, '../Public/landing.html')
 
 router.get("/", (req, res) => {
-    res.status(200).send("Aloha")
+    res.status(200).send("ITDA-GIS-Maps")
 })
 
 module.exports = router;
