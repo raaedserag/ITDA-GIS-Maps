@@ -9,6 +9,14 @@ module.exports = {
         }
         return offices;
     },
+    lookups_formatter(lookups){
+        let formattedLookup = {}
+        // Format retreived objects
+        lookups.map(lookup => formattedLookup[lookup[0]]=lookup[1] )
+
+
+        return formattedLookup;
+    },
     sequelizeBinds(count) {
         let sequelizedBinds = "("
         for (let i = 0; i < count; i++)

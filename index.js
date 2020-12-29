@@ -14,8 +14,8 @@ let app = express();
     
     // Initialize Cache
     require("./database/redis").redisMainConnection.init()
-    await require("./services/admin-service").cashGovsOfficesLocations()
-    
+    await require("./services/admin-service").updateCash()
+
     // Initiate the server on the selected host:port
     app.listen(port, host, () => winston.info(`Server started as ${process.env.NODE_ENV} on ${host}:${port}`));
 	

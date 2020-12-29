@@ -3,12 +3,13 @@ const winston = require("winston")
 // Helpers & services
 const {twirlConsole} = require("../helpers/maps-helper")
 const redisClient = require("../database/redis").redisMainConnection
-const {getOfficeLocationsDB} = require("./maps-services")
+const {getOfficeLocationsDB, getOfficeCountsDB} = require("./maps-services")
 const {getAllGovsCodes} = require("../helpers/maps-helper")
+// Constants
 //----------------------------------
 
 
-async function cashGovOffices(gov_code){
+async function cashGovOfficesLocations(gov_code){
     let entries = []
     let offices = await getOfficeLocationsDB(gov_code)
     for (let office of offices) {
@@ -19,11 +20,11 @@ async function cashGovOffices(gov_code){
     return {gov_code, result};
 }
 
-module.exports.cashGovsOfficesLocations = async function(gov_code=null) {
+module.exports.cashAllOfficesLocations = async function(gov_code=null) {
     let interval = twirlConsole("Updating cache ")// For fun
     let cashResult;
     if(gov_code){
-        cashResult =  await cashGovOffices(gov_code)
+        cashResult =  await cashGovOfficesLocations(gov_code)
     }
 
     // Cash all govs
@@ -31,7 +32,7 @@ module.exports.cashGovsOfficesLocations = async function(gov_code=null) {
         let result = []
         let govs = getAllGovsCodes()
         for (let gov of govs) {
-            let cashedOffices = await cashGovOffices(gov)
+            let cashedOffices = await cashGovOfficesLocations(gov)
             if(cashedOffices) result = result.concat(cashedOffices)
         }
 
@@ -39,6 +40,24 @@ module.exports.cashGovsOfficesLocations = async function(gov_code=null) {
     }
     clearInterval(interval) // Remove fun :D
     console.log("\n")
-    winston.info(`Cache updated:\n, ${JSON.stringify(cashResult, null, 2)}`)
+    winston.info(`Offices cache updated with governorates:\n, ${JSON.stringify(cashResult, null, 2)}`)
     return cashResult;
+}
+
+module.exports.cashOfficeCounts = async function(){
+    let interval = twirlConsole("Updating cache ")// For fun
+    let result = await getOfficeCountsDB()
+    if(!result) return null
+    
+    result = await redisClient.mSetHash(`ITDA_LOOKUPS`, [].concat.apply([], result))
+    
+    clearInterval(interval) // Remove fun :D
+    console.log("\n")
+    winston.info(`Offices count cashe updated:\n, ${JSON.stringify(result, null, 2)}`)
+    return result;
+}
+
+module.exports.updateCash = async function(){
+    await this.cashAllOfficesLocations();
+    await this.cashOfficeCounts();
 }

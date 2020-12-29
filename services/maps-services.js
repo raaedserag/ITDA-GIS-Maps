@@ -56,3 +56,21 @@ module.exports.getOfficeLocationsCash = async function(gov_code=null) {
         return (result && result.length)? result : null
     }
 }
+
+module.exports.getOfficeCountsDB = async function(){
+    let connection = new OracleConnection()
+    await connection.init()
+    
+    let lookups = await connection.client.execute(`
+    SELECT * FROM ${oracle_config.lookupName}
+    `)
+    connection.destructor()
+    return (lookups && lookups.rows && lookups.rows.length)?  lookups.rows : null;
+}
+
+module.exports.getOfficeCountsCash = async function(){
+    let result = await redisClient.getAllHash(`ITDA_LOOKUPS`)
+    if (!result) return null;
+    
+    return result;
+}
