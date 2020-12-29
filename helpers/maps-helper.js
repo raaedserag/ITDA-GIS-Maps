@@ -3,6 +3,7 @@ module.exports = {
     office_formatter(offices) {
         for (let [index, office] of offices.entries()) {
             office.location = { lat: office.lat, long: office.long }
+            if(office.revenues) office.revenues = office.revenues.toFixed(2)
             delete office.lat
             delete office.long
         }
